@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Capsa Royale{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="wrap">
+        <div class="topbar">
+            <a href="{{ url_for('home') }}" class="brand"><span class="suit">♠</span> CAPSA ROYALE</a>
+            <nav class="links">
+                <a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a>
+                <a href="{{ url_for('new_game') }}" class="{% if request.endpoint == 'new_game' %}active{% endif %}">New Game</a>
+                <a href="{{ url_for('history_page') }}" class="{% if request.endpoint == 'history_page' %}active{% endif %}">History</a>
+            </nav>
+        </div>
+
+        {% block content %}{% endblock %}
+    </div>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

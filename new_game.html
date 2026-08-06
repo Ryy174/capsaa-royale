@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Capsa Royale - New Game{% endblock %}
+{% block content %}
+
+<h1>Buat <span class="accent">Game Baru</span></h1>
+<p class="subtitle">Atur target poin dan siapkan pemainmu.</p>
+
+{% if error %}
+<div class="card" style="border-color: var(--red); color: var(--red);">{{ error }}</div>
+{% endif %}
+
+<form method="POST" action="{{ url_for('new_game') }}">
+    <div class="card">
+        <div class="section-label">Target Poin</div>
+        <div class="target-presets" id="presetChips">
+            <button type="button" class="preset-chip" data-value="10">10</button>
+            <button type="button" class="preset-chip active" data-value="25">25</button>
+            <button type="button" class="preset-chip" data-value="50">50</button>
+            <button type="button" class="preset-chip" data-value="100">100</button>
+        </div>
+        <input type="number" name="target_score" id="targetScoreInput" value="25" min="1" required>
+    </div>
+
+    <div class="card">
+        <div class="section-label">Pemain (2-8 orang)</div>
+        <div id="playerFields">
+            <div class="field-group">
+                <input type="text" name="player_name" placeholder="Nama Pemain 1" required>
+            </div>
+            <div class="field-group">
+                <input type="text" name="player_name" placeholder="Nama Pemain 2" required>
+            </div>
+        </div>
+        <button type="button" id="addPlayerBtn" class="btn btn-outline" style="margin-top: 0.5rem;">+ Tambah Pemain</button>
+    </div>
+
+    <button type="submit" class="btn btn-gold btn-full">🎲 Start Game</button>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const presetChips = document.querySelectorAll('.preset-chip');
+    const targetInput = document.getElementById('targetScoreInput');
+
+    presetChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            presetChips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            targetInput.value = chip.dataset.value;
+        });
+    });
+
+    targetInput.addEventListener('input', () => {
+        presetChips.forEach(c => c.classList.remove('active'));
+    });
+
+    const playerFields = document.getElementById('playerFields');
+    const addPlayerBtn = document.getElementById('addPlayerBtn');
+    const MAX_PLAYERS = 8;
+
+    addPlayerBtn.addEventListener('click', () => {
+        const currentCount = playerFields.querySelectorAll('.field-group').length;
+        if (currentCount >= MAX_PLAYERS) {
+            alert('Maksimal 8 pemain.');
+            return;
+        }
+
+        const group = document.createElement('div');
+        group.className = 'field-group';
+        group.innerHTML = `
+            <input type="text" name="player_name" placeholder="Nama Pemain ${currentCount + 1}" required>
+            <button type="button" class="remove-player">&times;</button>
+        `;
+        playerFields.appendChild(group);
+
+        group.querySelector('.remove-player').addEventListener('click', () => {
+            group.remove();
+        });
+
+        if (currentCount + 1 >= MAX_PLAYERS) {
+            addPlayerBtn.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

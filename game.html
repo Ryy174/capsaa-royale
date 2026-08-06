@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}Capsa Royale - Game{% endblock %}
+{% block content %}
+
+<h1>Target <span class="accent">{{ game['target_score'] }} Poin</span></h1>
+<p class="subtitle">
+    {% if game['status'] == 'finished' %}
+        🏆 Game selesai — pemenang: {{ game['winner_name'] }}
+    {% else %}
+        Pilih hasil tiap pemain lalu simpan ronde.
+    {% endif %}
+</p>
+
+<div class="card">
+    <div class="section-label">Leaderboard</div>
+    <div id="leaderboard">
+        {% for p in players %}
+        <div class="leaderboard-item" data-player-id="{{ p['id'] }}">
+            <div class="rank">{{ loop.index }}</div>
+            <div class="leaderboard-row-main">
+                <div class="player-name">{{ p['name'] }}</div>
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: {{ [(p['total_score'] / game['target_score'] * 100), 100] | min if game['target_score'] > 0 else 0 }}%;"></div>
+                </div>
+            </div>
+            <div class="player-score">{{ p['total_score'] }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% if game['status'] == 'active' %}
+<div class="card">
+    <div class="section-label">Input Ronde</div>
+    <div id="roundEntry">
+        {% for p in players %}
+        <div class="round-player-row" data-player-id="{{ p['id'] }}">
+            <div class="round-player-name">{{ p['name'] }}</div>
+            <div class="chip-options">
+                <button type="button" class="chip" data-symbol="gold" title="+3">⭐</button>
+                <button type="button" class="chip" data-symbol="silver" title="+2">🥈</button>
+                <button type="button" class="chip" data-symbol="bronze" title="+1">🥉</button>
+                <button type="button" class="chip" data-symbol="flat" title="0">😐</button>
+                <button type="button" class="chip" data-symbol="minus1" title="-1">❌</button>
+                <button type="button" class="chip" data-symbol="minus2" title="-2">💣</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <button id="saveRoundBtn" class="btn btn-gold btn-full" style="margin-top: 1.25rem;">💾 Simpan Ronde</button>
+</div>
+{% endif %}
+
+<div class="card">
+    <div class="section-label">Riwayat Ronde</div>
+    {% if history %}
+        {% for h in history %}
+        <div class="round-history-entry">
+            <div class="round-label">Ronde {{ h.round['round_number'] }}</div>
+            <div class="round-scores-line">
+                {% for s in h.scores %}
+                <span class="score-tag {% if s['points'] > 0 %}pos{% elif s['points'] < 0 %}neg{% endif %}">
+                    {{ s['name'] }} {{ '%+d' % s['points'] }}
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-state">Belum ada ronde yang dimainkan.</div>
+    {% endif %}
+</div>
+
+<div class="btn-row">
+    <form method="POST" action="{{ url_for('reset_game', game_id=game['id']) }}" onsubmit="return confirm('Reset game ini? Semua skor akan kembali ke 0.');" style="flex:1;">
+        <button type="submit" class="btn btn-outline btn-full">🔄 Reset Game</button>
+    </form>
+    <a href="{{ url_for('new_game') }}" class="btn btn-ghost" style="flex:1; text-align:center;">🎴 New Game</a>
+</div>
+
+<!-- Winner Modal -->
+<div class="winner-overlay {% if game['status'] == 'finished' %}show{% endif %}" id="winnerOverlay">
+    <div class="winner-modal">
+        <div class="winner-suits">🏆 🎉 🏆</div>
+        <div class="winner-label">Champion</div>
+        <div class="winner-name" id="winnerName">{{ game['winner_name'] or '' }}</div>
+        <div class="winner-stats">
+            <div>
+                <div class="winner-stat-value">{{ game['target_score'] }}</div>
+                <div class="winner-stat-label">Target Poin</div>
+            </div>
+            <div>
+                <div class="winner-stat-value" id="winnerScore">
+                    {% for p in players %}{% if p['name'] == game['winner_name'] %}{{ p['total_score'] }}{% endif %}{% endfor %}
+                </div>
+                <div class="winner-stat-label">Total Poin</div>
+            </div>
+        </div>
+        <div class="btn-row">
+            <form method="POST" action="{{ url_for('reset_game', game_id=game['id']) }}" style="flex:1;">
+                <button type="submit" class="btn btn-gold btn-full">Main Lagi</button>
+            </form>
+            <a href="{{ url_for('home') }}" class="btn btn-outline" style="flex:1; text-align:center;">Menu Utama</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const gameId = {{ game['id'] }};
+    const targetScore = {{ game['target_score'] }};
+</script>
+<script src="{{ url_for('static', filename='js/game.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Capsa Royale - History{% endblock %}
+{% block content %}
+
+<h1>Riwayat <span class="accent">Game</span></h1>
+<p class="subtitle">Semua pertandingan yang sudah selesai.</p>
+
+{% if games %}
+    {% for entry in games %}
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+            <div>
+                <div style="font-weight:600; font-size:1.05rem;">🏆 {{ entry.game['winner_name'] }}</div>
+                <div class="game-list-meta">{{ entry.game['created_at'][:10] }} · Target {{ entry.game['target_score'] }} poin</div>
+            </div>
+            <span class="badge badge-finished">Selesai</span>
+        </div>
+        {% for p in entry.players %}
+        <div class="leaderboard-item">
+            <div class="rank">{{ loop.index }}</div>
+            <div class="player-name">{{ p['name'] }}</div>
+            <div class="player-score">{{ p['total_score'] }}</div>
+        </div>
+        {% endfor %}
+        <form method="POST" action="{{ url_for('delete_game', game_id=entry.game['id']) }}" onsubmit="return confirm('Hapus riwayat game ini?');" style="margin-top: 0.75rem;">
+            <button type="submit" class="btn btn-ghost" style="font-size: 0.8rem; padding: 0.5rem 1rem;">Hapus</button>
+        </form>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="card">
+        <div class="empty-state">
+            <span class="suit-icon">♦ ♣</span>
+            Belum ada game yang selesai.
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}

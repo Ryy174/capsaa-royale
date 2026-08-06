@@ -1,0 +1,640 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Cormorant+Garamond:ital@0;1&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --black: #08080a;
+    --charcoal: #121317;
+    --felt: #0e2a1c;
+    --felt-light: #143a26;
+    --gold: #d4af37;
+    --gold-light: #f2d879;
+    --gold-dim: #8a6f26;
+    --cream: #f3ecd8;
+    --cream-dim: #b8b1a0;
+    --red: #b8354a;
+    --green-win: #2f8f5b;
+    --shadow: rgba(0, 0, 0, 0.6);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: radial-gradient(ellipse at top, #14151a 0%, var(--black) 65%);
+    color: var(--cream);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Suit watermark background */
+body::before {
+    content: "♠";
+    position: fixed;
+    top: -10%;
+    right: -8%;
+    font-size: 45rem;
+    color: rgba(212, 175, 55, 0.035);
+    font-family: 'Playfair Display', serif;
+    z-index: 0;
+    pointer-events: none;
+    line-height: 1;
+}
+
+body::after {
+    content: "♣";
+    position: fixed;
+    bottom: -15%;
+    left: -10%;
+    font-size: 40rem;
+    color: rgba(212, 175, 55, 0.03);
+    font-family: 'Playfair Display', serif;
+    z-index: 0;
+    pointer-events: none;
+    line-height: 1;
+}
+
+.wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+}
+
+/* ---------- Header / Nav ---------- */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+}
+
+.brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: 0.02em;
+    color: var(--gold-light);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.brand .suit {
+    color: var(--gold);
+}
+
+nav.links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+nav.links a {
+    color: var(--cream-dim);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid transparent;
+}
+
+nav.links a:hover,
+nav.links a.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold);
+}
+
+/* ---------- Typography ---------- */
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 2.1rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.01em;
+}
+
+h1 .accent {
+    color: var(--gold-light);
+}
+
+.subtitle {
+    color: var(--cream-dim);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+}
+
+/* ---------- Cards ---------- */
+
+.card {
+    background: linear-gradient(160deg, var(--charcoal) 0%, #0c0d10 100%);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 14px;
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 30px var(--shadow);
+    position: relative;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 1.25rem;
+    right: 1.25rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    border-radius: 999px;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn-gold {
+    background: linear-gradient(180deg, var(--gold-light), var(--gold));
+    color: #201a06;
+    box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
+}
+
+.btn-gold:hover {
+    box-shadow: 0 6px 24px rgba(212, 175, 55, 0.5);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: var(--gold-light);
+}
+
+.btn-outline:hover {
+    background: rgba(212, 175, 55, 0.08);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--cream-dim);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.btn-ghost:hover {
+    color: var(--cream);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.btn-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* ---------- Forms ---------- */
+
+label {
+    display: block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold-dim);
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    background: #0a0b0d;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    color: var(--cream);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.field-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+}
+
+.field-group input {
+    margin-bottom: 0;
+}
+
+.remove-player {
+    background: transparent;
+    border: none;
+    color: var(--red);
+    font-size: 1.3rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.25rem 0.5rem;
+}
+
+.target-presets {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.preset-chip {
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    background: transparent;
+    color: var(--cream-dim);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.15s ease;
+}
+
+.preset-chip.active,
+.preset-chip:hover {
+    background: var(--gold);
+    color: #201a06;
+    border-color: var(--gold);
+}
+
+/* ---------- Leaderboard ---------- */
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.leaderboard-item:last-child {
+    border-bottom: none;
+}
+
+.rank {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--gold-dim);
+    width: 1.75rem;
+    text-align: center;
+}
+
+.leaderboard-item:nth-child(1) .rank {
+    color: var(--gold-light);
+}
+
+.player-name {
+    flex: 1;
+    font-weight: 500;
+    font-size: 1.05rem;
+}
+
+.player-score {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--gold-light);
+    min-width: 3rem;
+    text-align: right;
+}
+
+.progress-track {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 0.35rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--felt-light), var(--gold));
+    border-radius: 999px;
+    transition: width 0.4s ease;
+}
+
+.leaderboard-row-main {
+    flex: 1;
+}
+
+/* ---------- Score Selector (round entry) ---------- */
+
+.round-player-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    flex-wrap: wrap;
+}
+
+.round-player-row:last-child {
+    border-bottom: none;
+}
+
+.round-player-name {
+    font-weight: 500;
+    min-width: 90px;
+}
+
+.chip-options {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.chip {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid rgba(212, 175, 55, 0.25);
+    background: #0a0b0d;
+    color: var(--cream-dim);
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.chip:hover {
+    border-color: var(--gold);
+}
+
+.chip.selected {
+    background: linear-gradient(180deg, var(--gold-light), var(--gold));
+    border-color: var(--gold);
+    color: #201a06;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+    transform: scale(1.08);
+}
+
+/* ---------- History ---------- */
+
+.round-history-entry {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.round-history-entry:last-child {
+    border-bottom: none;
+}
+
+.round-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold-dim);
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+}
+
+.round-scores-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.score-tag {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--cream-dim);
+}
+
+.score-tag.pos {
+    color: var(--gold-light);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.score-tag.neg {
+    color: var(--red);
+    background: rgba(184, 53, 74, 0.1);
+}
+
+/* ---------- Game list / home ---------- */
+
+.game-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(212, 175, 55, 0.12);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    text-decoration: none;
+    color: var(--cream);
+    transition: border-color 0.2s ease;
+}
+
+.game-list-item:hover {
+    border-color: var(--gold);
+}
+
+.game-list-meta {
+    font-size: 0.8rem;
+    color: var(--cream-dim);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--cream-dim);
+}
+
+.empty-state .suit-icon {
+    font-size: 2.5rem;
+    color: var(--gold-dim);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+}
+
+.badge-finished {
+    background: rgba(47, 143, 91, 0.15);
+    color: var(--green-win);
+}
+
+/* ---------- Winner Modal ---------- */
+
+.winner-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 6, 0.88);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 1.5rem;
+}
+
+.winner-overlay.show {
+    display: flex;
+}
+
+.winner-modal {
+    background: radial-gradient(circle at top, #1a1a10 0%, var(--black) 75%);
+    border: 1px solid var(--gold);
+    border-radius: 18px;
+    padding: 3rem 2rem;
+    text-align: center;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 0 60px rgba(212, 175, 55, 0.3);
+    animation: winnerPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes winnerPop {
+    from {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.winner-suits {
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.3em;
+}
+
+.winner-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold-dim);
+    margin-bottom: 0.5rem;
+}
+
+.winner-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: 2.1rem;
+    color: var(--gold-light);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+.winner-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.winner-stat-value {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--cream);
+}
+
+.winner-stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--cream-dim);
+    margin-top: 0.2rem;
+}
+
+/* ---------- Section label ---------- */
+
+.section-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold-dim);
+    font-weight: 600;
+    margin-bottom: 0.9rem;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .winner-name {
+        font-size: 1.6rem;
+    }
+
+    .chip {
+        width: 38px;
+        height: 38px;
+        font-size: 0.95rem;
+    }
+
+    nav.links {
+        gap: 1rem;
+    }
+
+    nav.links a {
+        font-size: 0.75rem;
+    }
+}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Capsa Royale - Home{% endblock %}
+{% block content %}
+
+<h1>Selamat Datang di <span class="accent">Capsa Royale</span></h1>
+<p class="subtitle">Catat skor capsa bareng teman, secepat kamu membagi kartu.</p>
+
+<div class="card">
+    <div class="section-label">Game Aktif</div>
+
+    {% if active_games %}
+        {% for g in active_games %}
+        <a href="{{ url_for('game_board', game_id=g['id']) }}" class="game-list-item">
+            <div>
+                <div style="font-weight:600;">Target {{ g['target_score'] }} Poin</div>
+                <div class="game-list-meta">Dibuat {{ g['created_at'][:10] }}</div>
+            </div>
+            <div style="color: var(--gold-light); font-size: 1.3rem;">→</div>
+        </a>
+        {% endfor %}
+    {% else %}
+        <div class="empty-state">
+            <span class="suit-icon">♠ ♥</span>
+            Belum ada game aktif. Yuk mulai game baru!
+        </div>
+    {% endif %}
+</div>
+
+<a href="{{ url_for('new_game') }}" class="btn btn-gold btn-full">🎴 Buat Game Baru</a>
+
+{% endblock %}
