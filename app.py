@@ -17,7 +17,7 @@ SCORE_OPTIONS = {
 }
 
 SYMBOL_EMOJI = {
-    "diamond": "💎",https://www.instagram.com/p/DbnXQlFPvQn/?igsh=MnR1ZDRodngwYXJw
+    "diamond": "💎",
     "gold": "⭐",
     "silver": "🥈",
     "bronze": "🥉",
