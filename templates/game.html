@@ -43,6 +43,8 @@
                 <button type="button" class="chip" data-symbol="flat" title="0">😐</button>
                 <button type="button" class="chip" data-symbol="minus1" title="-1">❌</button>
                 <button type="button" class="chip" data-symbol="minus2" title="-2">💣</button>
+                <button type="button" class="chip" data-symbol="diamond" title="+4">💎</button>
+                <button type="button" class="chip" data-symbol="skull" title="-3">☠️</button>
             </div>
         </div>
         {% endfor %}
@@ -60,7 +62,7 @@
             <div class="round-scores-line">
                 {% for s in h.scores %}
                 <span class="score-tag {% if s['points'] > 0 %}pos{% elif s['points'] < 0 %}neg{% endif %}">
-                    {{ s['name'] }} {{ '%+d' % s['points'] }}
+                    {{ symbol_emoji.get(s['symbol'], '') }} {{ s['name'] }} {{ '%+d' % s['points'] }}
                 </span>
                 {% endfor %}
             </div>
@@ -109,6 +111,11 @@
 
 {% block scripts %}
 <script>
+    const gameId = {{ game['id'] }};
+    const targetScore = {{ game['target_score'] }};
+</script>
+<script src="{{ url_for('static', filename='js/game.js') }}"></script>
+{% endblock %}<script>
     const gameId = {{ game['id'] }};
     const targetScore = {{ game['target_score'] }};
 </script>
